@@ -1,0 +1,83 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:vm="clr-namespace:Avalonia_RandomAnimeTorrentApp.ViewModels"
+			 xmlns:views="clr-namespace:Avalonia_RandomAnimeTorrentApp.Views"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Avalonia_RandomAnimeTorrentApp.Views.AnimeInfo">
+	<UserControl.DataContext>
+		<vm:AnimeInfoViewModel />
+	</UserControl.DataContext>
+	<UserControl.Content>
+		<Grid ShowGridLines="False">
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="4*"/>
+			<ColumnDefinition Width="13*"/>
+			
+		</Grid.ColumnDefinitions>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="12*"/>
+		</Grid.RowDefinitions>
+		<StackPanel
+			Grid.Column="0" 
+			Grid.Row="1"
+			VerticalAlignment="Top"
+			HorizontalAlignment="Center"
+			Orientation="Vertical">
+			
+			<Image
+				Name="imageInfo"
+				Grid.Column="0"
+				Grid.Row="1"
+				HorizontalAlignment="Center"
+				VerticalAlignment="Top"
+				MaxHeight="200"
+				Margin="0"
+				Source="avares://Avalonia RandomAnimeTorrentApp/Assets/konosuba.png"/>
+			
+			<Button
+				Name="playButton"
+				Grid.Column="0"
+				Grid.Row="1"
+				Content="Play !"
+				Width="150"
+				HorizontalContentAlignment="Center"
+				HorizontalAlignment="Center"
+				Margin="10"/>
+		</StackPanel>
+			
+		<StackPanel
+			Grid.Column="1" 
+			Grid.Row="1"
+			VerticalAlignment="Top"
+			HorizontalAlignment="Left"
+			Orientation="Vertical">
+			
+			<Label
+			
+				Name="labelTitleInfo"
+				FontWeight="Bold"
+				FontSize="20"
+				Grid.Column="1"
+				Grid.Row="1"
+				Content="Title Sanctus no lorem in vel ut commodo lorem accusam sit"
+				/>
+			<Label
+			
+				Grid.Column="1"
+				Grid.Row="1"
+				Margin="0,15,0,0"
+				HorizontalAlignment="Left">
+				<TextBlock
+					Name="textBlockDescriptionInfo"
+					MaxWidth="450"
+					TextWrapping="Wrap"
+					Text="{Binding AnimeInfoDescriptionTextBlock}">
+				</TextBlock>
+			</Label>
+		</StackPanel>
+	</Grid>
+	</UserControl.Content>
+</UserControl>
