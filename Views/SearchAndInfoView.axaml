@@ -6,9 +6,6 @@
 			 xmlns:views="clr-namespace:Avalonia_RandomAnimeTorrentApp.Views"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Avalonia_RandomAnimeTorrentApp.Views.SearchAndInfoView">
-	<UserControl.DataContext>
-		<vm:MainWindowViewModel />
-	</UserControl.DataContext>
 	<UserControl.Content>
 		<StackPanel Background="Gray">
 			<Grid Height="50" ShowGridLines="False">
@@ -47,13 +44,14 @@
 							 Background="Transparent"
 							 AutoScrollToSelectedItem="True"
 							 Items="{Binding myItems}"
-							 SelectionChanged="onSearchResulteSelectionChangedListBox"
 							 Height="200"
 							 IsTextSearchEnabled="True"
 							 SelectionMode="Single"
 							 CornerRadius="2"
 							 ZIndex="0"
-							 BorderBrush="DarkBlue">
+							 BorderBrush="DarkBlue"
+							 
+						>
 						
 						<ListBox.ItemTemplate>
 							<DataTemplate>
