@@ -38,6 +38,12 @@ namespace Avalonia_RandomAnimeTorrentApp.ViewModels
         private void TextBoxLostFocus() => isGridListBoxVisible = false;
 
         [RelayCommand]
+        private void TextBoxTextInput()
+        {
+
+        }
+
+        [RelayCommand]
         private void onSearchResulteSelectionChangedListBox() { }
     }
 }

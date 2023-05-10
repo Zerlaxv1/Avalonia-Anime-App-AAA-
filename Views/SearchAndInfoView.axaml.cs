@@ -54,6 +54,11 @@ namespace Avalonia_RandomAnimeTorrentApp.Views
             timer.AutoReset = false;
             timer.Stop();
         }
+
+        private void TextBoxTextInput(object sender, RoutedEventArgs e )
+        {
+            
+        }
         
         private void TextBoxLostFocus(object sender, RoutedEventArgs e)
         {
@@ -79,9 +84,6 @@ namespace Avalonia_RandomAnimeTorrentApp.Views
             ///just moved the function idk why but i did it
             TextBoxSearch(source, e);
         }
-
-        
-
 
         private async void TextBoxSearch(object sender, ElapsedEventArgs e)
         {
@@ -128,7 +130,7 @@ namespace Avalonia_RandomAnimeTorrentApp.Views
             {""search"": """ + recherche + @"""}";
 
             ///the url to use with graphql
-            Uri url = new Uri("https:///graphql.anilist.co");
+            Uri url = new Uri("https://graphql.anilist.co");
 
             ///call the api
             JObject ApiResponse = await WebDb.CallApiGraphQl(query, variables, url) ?? throw new Exception("Anlist api return null");
@@ -195,7 +197,7 @@ namespace Avalonia_RandomAnimeTorrentApp.Views
             string Id = JObject.Parse(Tag)["id"].ToString();
 
             // get the data from the api
-            Uri url = new Uri($"https:///find-my-anime.dtimur.de/api?id={Id}&provider=Anilist&includeAdult=true&collectionConsent=false\";");
+            Uri url = new Uri($"https://find-my-anime.dtimur.de/api?id={Id}&provider=Anilist&includeAdult=true&collectionConsent=false\";");
             JObject response = await WebDb.CallApiJson(url);
 
             // add the data to the tags
