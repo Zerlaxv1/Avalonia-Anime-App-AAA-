@@ -35,7 +35,7 @@
 				VerticalAlignment="Top"
 				MaxHeight="200"
 				Margin="0"
-				Source="avares://Avalonia RandomAnimeTorrentApp/Assets/konosuba.png"/>
+				Source="{Binding AnimeInfoImageBitmap}"/>
 			
 			<Button
 				Name="playButton"
@@ -49,6 +49,7 @@
 		</StackPanel>
 			
 		<StackPanel
+			
 			Grid.Column="1" 
 			Grid.Row="1"
 			VerticalAlignment="Top"
@@ -62,7 +63,7 @@
 				FontSize="20"
 				Grid.Column="1"
 				Grid.Row="1"
-				Content="Title Sanctus no lorem in vel ut commodo lorem accusam sit"
+				Content="{Binding AnimeInfoTitleLabel}"
 				/>
 			<Label
 			

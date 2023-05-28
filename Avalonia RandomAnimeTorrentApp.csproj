@@ -28,6 +28,7 @@
     <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.18" />
     <PackageReference Include="Avalonia.Xaml.Behaviors" Version="0.10.18" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.1.0" />
+    <PackageReference Include="EventBinder.Avalonia" Version="2.5.2" />
     <PackageReference Include="GraphQL" Version="7.3.1" />
     <PackageReference Include="GraphQL-Parser" Version="8.1.0" />
     <PackageReference Include="GraphQL.Client" Version="5.1.1" />

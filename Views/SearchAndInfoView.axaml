@@ -20,15 +20,13 @@
 					<RowDefinition Height="*"/>
 				</Grid.RowDefinitions>
 				<Panel Grid.Column="0"/>
-				<TextBox 
-						 Grid.Column="1"
+				<TextBox Grid.Column="1"
 						 Grid.Row="0"
 						 Name="SearchTextBox"
 						 AcceptsReturn="False"
 						 Margin="10"
-						 GotFocus="TextBoxGotFocus"
-						 LostFocus="TextBoxLostFocus"
-						 />
+						 Text="{Binding SearchText}"/>
+
 				<Panel Grid.Column="2"/>
 
 				<!-- Search ListBox -->
@@ -38,37 +36,39 @@
 					  IsVisible="{Binding IsGridListBoxVisible}"
 					  Height="200"
 					  Margin="10,95,10,0">
+
 					<ListBox Grid.Column="1"
 							 Grid.Row="1"
 							 Name="SearchResultsListBox"
 							 Background="Transparent"
 							 AutoScrollToSelectedItem="True"
-							 Items="{Binding myItems}"
+							 Items="{Binding MyItems}"
+							 SelectedItem="{Binding SelectedItem}"
 							 Height="200"
 							 IsTextSearchEnabled="True"
 							 SelectionMode="Single"
 							 CornerRadius="2"
 							 ZIndex="0"
-							 BorderBrush="DarkBlue"
-							 
-						>
-						
+							 BorderBrush="DarkBlue">
+
 						<ListBox.ItemTemplate>
 							<DataTemplate>
 								<StackPanel Orientation="Horizontal" ZIndex="0">
+
 									<Image Source="{Binding ImageBitmap}"
-										   Width="50" Height="50"
-										   />
+										   Width="50" Height="50"/>
+
 									<TextBlock Text="{Binding Text}"
 											   Margin="10,0,0,0"
 											   VerticalAlignment="Center"/>
+
 								</StackPanel>
 							</DataTemplate>
 						</ListBox.ItemTemplate>
 
 					</ListBox>
-					
-					<ExperimentalAcrylicBorder IsHitTestVisible="False" 
+
+					<ExperimentalAcrylicBorder IsHitTestVisible="False"
 											   CornerRadius="2"
 											   ZIndex="-1">
 						<ExperimentalAcrylicBorder.Material>
@@ -79,17 +79,17 @@
 								MaterialOpacity="0.8"/>
 						</ExperimentalAcrylicBorder.Material>
 					</ExperimentalAcrylicBorder>
-					
+
 				</Grid>
-				
-				</Grid>
+
+			</Grid>
 			<ContentControl x:Name="AnimeInfo" IsVisible="{Binding isAnimeInfoVisible}" ZIndex="-1">
 				<ContentControl.Content>
 					<views:AnimeInfo/>
 				</ContentControl.Content>
 
 			</ContentControl>
-			
+
 		</StackPanel>
 	</UserControl.Content>
 </UserControl>

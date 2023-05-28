@@ -30,10 +30,9 @@ namespace Avalonia_RandomAnimeTorrentApp.Views
             mtextBlockDescriptionInfo = this.FindControl<TextBlock>("textBlockDescriptionInfo") ?? throw new Exception("TextBlockDescriptionInfo not found");
             mlabelTitleInfo.Content = "Title2";
             this.DataContext = new AnimeInfoViewModel();
-            
-            //to test it will not stay here
-            DisplayResults2();
         }
+
+        /*
 
         /// <summary>
         /// need to be fixed but in a near futur it will display the results
@@ -62,22 +61,8 @@ namespace Avalonia_RandomAnimeTorrentApp.Views
             });
 
         }
-        /// <summary>
-        /// will be deleted
-        /// </summary>
-        public async void DisplayResults2()
-        {
-            //selected.Tags[0]
-            await Task.Delay(2000);
-            (DataContext as AnimeInfoViewModel).AnimeInfoDescriptionTextBlock = "sdiufguisdgfyuisdgfuisdgfuysdgfyu23";
-            /*
-            Dispatcher.UIThread.Post(() =>
-            {
-                mlabelTitleInfo.Content = "uwu23";
-                mtextBlockDescriptionInfo.Text = "owo23";
-            });
-            */
-        }
+
+        */
 
     }
 }

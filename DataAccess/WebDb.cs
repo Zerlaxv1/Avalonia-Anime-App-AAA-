@@ -6,6 +6,9 @@ using System;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.Drawing;
+using System.IO;
+using System.Net;
 
 namespace Avalonia_RandomAnimeTorrentApp.DataAccess
 {
@@ -62,6 +65,15 @@ namespace Avalonia_RandomAnimeTorrentApp.DataAccess
             string responseBody = await response.Content.ReadAsStringAsync();
             JObject jsonResponse = JObject.Parse("{\"data\":" + responseBody + "}");
             return jsonResponse;
+        }
+
+        public static async Task<Avalonia.Media.Imaging.Bitmap> CallApiBitmap(Uri url)
+        {
+            WebClient client = new WebClient();
+            var responseData = client.DownloadData(url);
+            Stream stream = new MemoryStream(responseData);
+            var image = new Avalonia.Media.Imaging.Bitmap(stream);
+            return image;
         }
     }
 }
