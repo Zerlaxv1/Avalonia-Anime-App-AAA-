@@ -14,13 +14,16 @@ namespace Avalonia_RandomAnimeTorrentApp.ViewModels
     internal partial class AnimeInfoViewModel : ObservableObject
     {
         [ObservableProperty]
-        public string animeInfoDescriptionTextBlock = "TwT2";
+        public string animeInfoDescriptionTextBlock;
 
         [ObservableProperty]
-        public string animeInfoTitleLabel = "Title";
+        public string animeInfoTitleLabel;
 
         [ObservableProperty]
         public Avalonia.Media.Imaging.Bitmap animeInfoImageBitmap;
+
+        [ObservableProperty]
+        public bool isPlayButtonVisible = false;
 
         public AnimeInfoViewModel()
         {
@@ -43,9 +46,10 @@ namespace Avalonia_RandomAnimeTorrentApp.ViewModels
             Uri imgUri = new Uri(requestAnilist["coverImage"]["large"].ToString());
             Avalonia.Media.Imaging.Bitmap img = WebDb.CallApiBitmap(imgUri).Result;
 
-            
+
 
             //changer l'ui
+            IsPlayButtonVisible = true;
             AnimeInfoDescriptionTextBlock = requestFindMyAnime["data"][0]["description"].ToString();
             AnimeInfoTitleLabel = requestFindMyAnime["data"][0]["title"].ToString();
             AnimeInfoImageBitmap = img;

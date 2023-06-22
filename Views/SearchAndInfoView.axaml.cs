@@ -62,23 +62,32 @@ namespace Avalonia_RandomAnimeTorrentApp.Views
             
         }
         
-        private void TextBoxLostFocus(object sender, RoutedEventArgs e)
+
+        private void TextBoxLostFocusEvent(object sender, RoutedEventArgs e)
         {
-            //list box invisible
-            mGridSearchResultsListBox.IsVisible = false;
+            var textBox = sender as TextBox;
+
+            if (textBox != null)
+            {
+                (DataContext as SearchAndInfoViewModel).TextBoxLostFocusAsync(textBox, e);
+            }
         }
 
-        private void TextBoxGotFocus(object sender, GotFocusEventArgs e)
+        private void TextBoxGotFocusEvent(object sender, GotFocusEventArgs e)
         {
-            //list box visible
-            mGridSearchResultsListBox.IsVisible = true;
+            var textBox = sender as TextBox;
+
+            if (textBox != null)
+            {
+                (DataContext as SearchAndInfoViewModel).TextBoxGotFocusAsync(textBox, e);
+            }
         }
         
         private void TextBoxSearchQuerieUpdate(object sender, TextInputEventArgs e)
         {
             //reset timer
             timer.Stop();
-            timer.Start();
+            //timer.Start();
         }
 
         private void OnTimedEvent(Object source, ElapsedEventArgs e)
@@ -179,7 +188,8 @@ namespace Avalonia_RandomAnimeTorrentApp.Views
                 mSearchResultsListBox.Items = items;
             });
 
+
         }
-        
+
     }
 }

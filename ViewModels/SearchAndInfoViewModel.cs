@@ -10,10 +10,12 @@ using Newtonsoft.Json.Linq;
 using System.IO;
 using System.Net;
 using Avalonia.Media.Imaging;
-using Avalonia_RandomAnimeTorrentApp.Views;
 using CommunityToolkit.Mvvm.Messaging;
-using static GraphQL.Validation.Rules.OverlappingFieldsCanBeMerged;
-using Avalonia.Controls.Shapes;
+using System.Windows.Input;
+using Avalonia.Controls;
+using Avalonia.Interactivity;
+using Avalonia.Input;
+using Avalonia.Threading;
 
 namespace Avalonia_RandomAnimeTorrentApp.ViewModels
 {
@@ -21,7 +23,6 @@ namespace Avalonia_RandomAnimeTorrentApp.ViewModels
     // TODO: There should be some comments on the purpose of the ViewModel
     public partial class SearchAndInfoViewModel : ObservableObject
     {
-
         #region Public Properties
 
         /// <summary>
@@ -46,7 +47,7 @@ namespace Avalonia_RandomAnimeTorrentApp.ViewModels
         /// Result of the search for web results based on the TextBox Text
         /// </summary>
         [ObservableProperty]
-        private ObservableCollection<MyItem> searchItems = new ObservableCollection<MyItem>();
+        private List<MyItem> searchItems = new List<MyItem>();
 
         /// <summary>
         /// I don't know why this is a string... it should be an ObservableCollection<string> I would think
@@ -60,6 +61,22 @@ namespace Avalonia_RandomAnimeTorrentApp.ViewModels
         /// </summary>
         [ObservableProperty]
         private string imageUrl = "https://i.imgur.com/1Z1Z1Z1.png";
+
+        public ICommand FunctionCommand { get; set; }
+
+        // crete public TextBoxLostFocusAsync method 
+        
+        public void TextBoxLostFocusAsync(object sender, RoutedEventArgs e)
+        {
+            IsGridListBoxVisible = false;
+        }
+
+        public void TextBoxGotFocusAsync(object sender, GotFocusEventArgs e)
+        {
+            IsGridListBoxVisible = true;
+        }
+
+
 
         #endregion Public Properties
 
@@ -106,14 +123,17 @@ namespace Avalonia_RandomAnimeTorrentApp.ViewModels
 
                 // If the ListBox is not visible... Set it to visible, and the opposite
                 // TODO: | FINISHED | This needs to be changed so that something makes it invisible...
+                // TODO: IsGridListBoxVisible false when lost focus
                 // I would have a transparent overlay that is behind the Textbox and ListBox...
                 // so when a user clicks on it it makes the ListBox visibility disappear again
-                if (searchText != "") { IsGridListBoxVisible = true; } else { IsGridListBoxVisible = false; }
+                //if (searchText != "") { IsGridListBoxVisible = true; } else { IsGridListBoxVisible = false; }
 
                 // Call the TextBoxSearch method using the updated TextBox Text
                 TextBoxSearch(searchText);
             }
         }
+
+        
 
         #endregion
 
@@ -170,7 +190,7 @@ namespace Avalonia_RandomAnimeTorrentApp.ViewModels
                 throw new Exception($"AniDB id not found, ${ex}");
             }
 
-            // send those informations to AnimeInfoViewModel
+            // send those informations to AnimeInfoViewModel by menssenger
 
             WeakReferenceMessenger.Default.Send(selectedItem);
 
@@ -233,7 +253,7 @@ namespace Avalonia_RandomAnimeTorrentApp.ViewModels
 
             // TODO:  I didn't change the imglist because I don't think you have it set up yet
             List<Bitmap> imglist = new List<Bitmap>();
-            ObservableCollection<MyItem> items = new ObservableCollection<MyItem>();
+            List<MyItem> items = new List<MyItem>();
 
             ///set the index to 0
             int index = 0;
@@ -263,11 +283,13 @@ namespace Avalonia_RandomAnimeTorrentApp.ViewModels
                 index++;
             }
 
-            SearchItems = items;
-
+            _ = Dispatcher.UIThread.InvokeAsync(() =>
+            {
+                SearchItems = items;
+                
+            });
         }
 
         #endregion
     }
 }
-

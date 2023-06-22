@@ -2,13 +2,21 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
 			 xmlns:vm="clr-namespace:Avalonia_RandomAnimeTorrentApp.ViewModels"
 			 xmlns:views="clr-namespace:Avalonia_RandomAnimeTorrentApp.Views"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Avalonia_RandomAnimeTorrentApp.Views.SearchAndInfoView">
 	<UserControl.Content>
-		<StackPanel Background="Gray">
-			<Grid Height="50" ShowGridLines="False">
+		<Grid Background="Gray" 
+					HorizontalAlignment="Stretch" 
+					VerticalAlignment="Stretch">
+			
+			<Grid	ShowGridLines="False"
+					HorizontalAlignment="Stretch"
+					VerticalAlignment="Stretch"
+					
+				>
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="*"/>
 					<ColumnDefinition Width="2*"/>
@@ -16,16 +24,25 @@
 				</Grid.ColumnDefinitions>
 				<Grid.RowDefinitions>
 					<RowDefinition Height="Auto"/>
-					<RowDefinition Height="2*"/>
+					<RowDefinition Height="2*" MinHeight="200" MaxHeight="355"/>
 					<RowDefinition Height="*"/>
 				</Grid.RowDefinitions>
+				<Panel Grid.Row="2"/>
 				<Panel Grid.Column="0"/>
-				<TextBox Grid.Column="1"
+				<TextBox 
+						 HorizontalAlignment="Stretch" 
+						 VerticalAlignment="Top"
+						 Grid.Column="1"
 						 Grid.Row="0"
 						 Name="SearchTextBox"
 						 AcceptsReturn="False"
 						 Margin="10"
-						 Text="{Binding SearchText}"/>
+						 Text="{Binding SearchText}"
+						 LostFocus="TextBoxLostFocusEvent"
+						 GotFocus="TextBoxGotFocusEvent"
+						 MaxHeight="10">
+						 
+				</TextBox>
 
 				<Panel Grid.Column="2"/>
 
@@ -34,17 +51,17 @@
 					Grid.Column="1"
 					  Grid.Row="1"
 					  IsVisible="{Binding IsGridListBoxVisible}"
-					  Height="200"
-					  Margin="10,95,10,0">
+					  
+					  Margin="10,0,10,0">
 
 					<ListBox Grid.Column="1"
 							 Grid.Row="1"
 							 Name="SearchResultsListBox"
 							 Background="Transparent"
 							 AutoScrollToSelectedItem="True"
-							 Items="{Binding MyItems}"
+							 Items="{Binding SearchItems}"
 							 SelectedItem="{Binding SelectedItem}"
-							 Height="200"
+							 
 							 IsTextSearchEnabled="True"
 							 SelectionMode="Single"
 							 CornerRadius="2"
@@ -54,13 +71,18 @@
 						<ListBox.ItemTemplate>
 							<DataTemplate>
 								<StackPanel Orientation="Horizontal" ZIndex="0">
-
-									<Image Source="{Binding ImageBitmap}"
-										   Width="50" Height="50"/>
-
+									<Border CornerRadius="5" ClipToBounds="True">
+										<Image Source="{Binding ImageBitmap}"
+									   Width="50" Height="50"
+									   Stretch="UniformToFill"
+										   />
+									</Border>
+									
 									<TextBlock Text="{Binding Text}"
+											   Foreground="White"
 											   Margin="10,0,0,0"
-											   VerticalAlignment="Center"/>
+											   VerticalAlignment="Center"
+											   />
 
 								</StackPanel>
 							</DataTemplate>
@@ -90,6 +112,6 @@
 
 			</ContentControl>
 
-		</StackPanel>
+		</Grid>
 	</UserControl.Content>
 </UserControl>

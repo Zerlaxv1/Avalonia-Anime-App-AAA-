@@ -67,9 +67,14 @@ namespace Avalonia_RandomAnimeTorrentApp.DataAccess
             return jsonResponse;
         }
 
+        /// <summary>
+        /// call a request to download an image and return it as a Bitmap
+        /// </summary>
+        /// <param name="url">image link, example : http://example.com/image.png</param>
+        /// <returns></returns>
         public static async Task<Avalonia.Media.Imaging.Bitmap> CallApiBitmap(Uri url)
         {
-            WebClient client = new WebClient();
+            WebClient client = new();
             var responseData = client.DownloadData(url);
             Stream stream = new MemoryStream(responseData);
             var image = new Avalonia.Media.Imaging.Bitmap(stream);

@@ -45,7 +45,8 @@
 				Width="150"
 				HorizontalContentAlignment="Center"
 				HorizontalAlignment="Center"
-				Margin="10"/>
+				Margin="10"
+				IsVisible="{Binding IsPlayButtonVisible}"/>
 		</StackPanel>
 			
 		<StackPanel
