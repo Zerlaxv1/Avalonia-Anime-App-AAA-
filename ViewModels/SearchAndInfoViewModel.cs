@@ -16,6 +16,7 @@ using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Input;
 using Avalonia.Threading;
+using System.Timers;
 
 namespace Avalonia_RandomAnimeTorrentApp.ViewModels
 {
@@ -24,7 +25,7 @@ namespace Avalonia_RandomAnimeTorrentApp.ViewModels
     public partial class SearchAndInfoViewModel : ObservableObject
     {
         #region Public Properties
-
+        System.Timers.Timer timer;
         /// <summary>
         /// List of Search Results based on the inputed TextBox string
         /// </summary>
@@ -129,7 +130,9 @@ namespace Avalonia_RandomAnimeTorrentApp.ViewModels
                 //if (searchText != "") { IsGridListBoxVisible = true; } else { IsGridListBoxVisible = false; }
 
                 // Call the TextBoxSearch method using the updated TextBox Text
-                TextBoxSearch(searchText);
+                timer.Stop();
+                timer.Start();
+                
             }
         }
 
@@ -145,7 +148,10 @@ namespace Avalonia_RandomAnimeTorrentApp.ViewModels
         /// </summary>
         public SearchAndInfoViewModel()
         {
-
+            timer = new System.Timers.Timer(500);
+            timer.Elapsed += TextBoxSearch;
+            timer.AutoReset = false;
+            timer.Stop();
         }
 
         #endregion
@@ -161,6 +167,10 @@ namespace Avalonia_RandomAnimeTorrentApp.ViewModels
         /// <exception cref="Exception"></exception>
         private async Task SearchResulteSelectionChangedAsync(MyItem selectedItem)
         {
+            if (selectedItem == null)
+            {
+                return;
+            }
 
             // get the tags
             string[] Tags = selectedItem.Tags;
@@ -204,7 +214,7 @@ namespace Avalonia_RandomAnimeTorrentApp.ViewModels
         /// </summary>
         /// <param name="searchText">The text in the Textbox</param>
         /// <exception cref="Exception"></exception>
-        private async void TextBoxSearch(string searchText)
+        private async void TextBoxSearch(object? sender, ElapsedEventArgs e)
         {
 
             var query = @"

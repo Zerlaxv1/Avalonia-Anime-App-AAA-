@@ -31,10 +31,6 @@ namespace Avalonia_RandomAnimeTorrentApp.Views
         private AnimeInfo animeInfo;
 
         #endregion
-
-        private Stopwatch stopwatch = new Stopwatch();
-        System.Timers.Timer timer;
-        private JArray arrayId;
         public ObservableCollection<string> MyList { get; } = new ObservableCollection<string>();
 
         public SearchAndInfoView()
@@ -48,54 +44,34 @@ namespace Avalonia_RandomAnimeTorrentApp.Views
             mSearchTextBox = this.FindControl<TextBox>("SearchTextBox") ?? throw new Exception("SearchTextBox not found");
             mGridSearchResultsListBox = this.FindControl<Grid>("GridSearchResultsListBox") ?? throw new Exception("GridSearchResultsListBox not found");
             mSearchTextBox.Focus();
-            mSearchTextBox.AddHandler(TextInputEvent, TextBoxSearchQuerieUpdate, RoutingStrategies.Tunnel);
-
-            //when stop tying for 500ms, call OnTimed Event
-            timer = new System.Timers.Timer(500);
-            timer.Elapsed += OnTimedEvent;
-            timer.AutoReset = false;
-            timer.Stop();
-        }
-
-        private void TextBoxTextInput(object sender, RoutedEventArgs e )
-        {
-            
         }
         
 
         private void TextBoxLostFocusEvent(object sender, RoutedEventArgs e)
         {
-            var textBox = sender as TextBox;
+            //var textBox = sender as TextBox;
 
+            GridSearchResultsListBox.IsVisible = false;
+            /*
             if (textBox != null)
             {
                 (DataContext as SearchAndInfoViewModel).TextBoxLostFocusAsync(textBox, e);
-            }
+            }*/
         }
 
         private void TextBoxGotFocusEvent(object sender, GotFocusEventArgs e)
         {
-            var textBox = sender as TextBox;
-
+            //var textBox = sender as TextBox;
+            
+            GridSearchResultsListBox.IsVisible = true;
+            
+            /*
             if (textBox != null)
             {
                 (DataContext as SearchAndInfoViewModel).TextBoxGotFocusAsync(textBox, e);
-            }
+            }*/
         }
-        
-        private void TextBoxSearchQuerieUpdate(object sender, TextInputEventArgs e)
-        {
-            //reset timer
-            timer.Stop();
-            //timer.Start();
-        }
-
-        private void OnTimedEvent(Object source, ElapsedEventArgs e)
-        {
-            //just moved the function idk why but i did it
-            TextBoxSearch(source, e);
-        }
-
+        /*
         private async void TextBoxSearch(object sender, ElapsedEventArgs e)
         {
             //stop timer
@@ -190,6 +166,7 @@ namespace Avalonia_RandomAnimeTorrentApp.Views
 
 
         }
+        */
 
     }
 }

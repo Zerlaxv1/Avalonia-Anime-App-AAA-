@@ -105,7 +105,11 @@
 				</Grid>
 
 			</Grid>
-			<ContentControl x:Name="AnimeInfo" IsVisible="{Binding isAnimeInfoVisible}" ZIndex="-1">
+			<ContentControl 
+				x:Name="AnimeInfo" 
+				IsVisible="{Binding isAnimeInfoVisible}" 
+				ZIndex="-1"
+				Margin="0,15,0,0">
 				<ContentControl.Content>
 					<views:AnimeInfo/>
 				</ContentControl.Content>
