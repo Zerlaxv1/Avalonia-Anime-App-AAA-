@@ -1,12 +1,8 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
-using Avalonia.Data.Core;
-using Avalonia.Data.Core.Plugins;
-using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using Avalonia_RandomAnimeTorrentApp.ViewModels;
 using Avalonia_RandomAnimeTorrentApp.Views;
-using System;
 
 namespace Avalonia_RandomAnimeTorrentApp
 {
@@ -21,9 +17,6 @@ namespace Avalonia_RandomAnimeTorrentApp
         {
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
-                // Line below is needed to remove Avalonia data validation.
-                // Without this line you will get duplicate validations from both Avalonia and CT
-                ExpressionObserver.DataValidators.RemoveAll(x => x is DataAnnotationsValidationPlugin);
                 desktop.MainWindow = new MainWindow
                 {
                     DataContext = new MainWindowViewModel(),
@@ -32,6 +25,5 @@ namespace Avalonia_RandomAnimeTorrentApp
 
             base.OnFrameworkInitializationCompleted();
         }
-
     }
 }

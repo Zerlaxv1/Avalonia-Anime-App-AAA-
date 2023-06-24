@@ -8,6 +8,8 @@ using Newtonsoft.Json.Linq;
 using Avalonia_RandomAnimeTorrentApp.DataAccess;
 using Avalonia.Media.Immutable;
 using System.Drawing;
+using Avalonia.Media;
+using System.Globalization;
 
 namespace Avalonia_RandomAnimeTorrentApp.ViewModels
 {
@@ -36,21 +38,31 @@ namespace Avalonia_RandomAnimeTorrentApp.ViewModels
         private async void OnMyMessageReceived(MyItem message)
         {
             //test
-            //AnimeInfoTitleLabel = string.Empty;
 
             //transform the string into a json object
             JObject requestFindMyAnime = JObject.Parse(message.Tags[1]);
             JObject requestAnilist = JObject.Parse(message.Tags[0]);
 
             //request image avec webdb
-            Uri imgUri = new Uri(requestAnilist["coverImage"]["large"].ToString());
+            Uri imgUri = new Uri(requestAnilist["coverImage"]["extraLarge"].ToString());
             Avalonia.Media.Imaging.Bitmap img = WebDb.CallApiBitmap(imgUri).Result;
 
-
+            string Description = requestFindMyAnime["data"][0]["description"].ToString().Replace("<br>", "\n").Replace("<i>", "").Replace("</i>", "");
+            
+            /*
+            FormattedText descriptionFormatted = new FormattedText(
+                Description,
+                CultureInfo.GetCultureInfo("en-us"),
+                FlowDirection.LeftToRight,
+                new Typeface("Verdana"),
+                15,
+                Avalonia.Media.Brushes.Black
+                );
+            */
 
             //changer l'ui
             IsPlayButtonVisible = true;
-            AnimeInfoDescriptionTextBlock = requestFindMyAnime["data"][0]["description"].ToString();
+            AnimeInfoDescriptionTextBlock = Description;
             AnimeInfoTitleLabel = requestFindMyAnime["data"][0]["title"].ToString();
             AnimeInfoImageBitmap = img;
         }

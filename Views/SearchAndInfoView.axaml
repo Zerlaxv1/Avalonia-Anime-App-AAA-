@@ -12,11 +12,10 @@
 					HorizontalAlignment="Stretch" 
 					VerticalAlignment="Stretch">
 			
-			<Grid	ShowGridLines="False"
-					HorizontalAlignment="Stretch"
-					VerticalAlignment="Stretch"
-					
-				>
+			<Grid	 ShowGridLines="False"
+					 HorizontalAlignment="Stretch"
+					 VerticalAlignment="Stretch">
+				
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="*"/>
 					<ColumnDefinition Width="2*"/>
@@ -40,7 +39,9 @@
 						 Text="{Binding SearchText}"
 						 LostFocus="TextBoxLostFocusEvent"
 						 GotFocus="TextBoxGotFocusEvent"
-						 MaxHeight="10">
+						 MaxHeight="10"
+						 Watermark="Search for an Anime"
+						 CornerRadius="3">
 						 
 				</TextBox>
 
@@ -51,7 +52,6 @@
 					Grid.Column="1"
 					  Grid.Row="1"
 					  IsVisible="{Binding IsGridListBoxVisible}"
-					  
 					  Margin="10,0,10,0">
 
 					<ListBox Grid.Column="1"
@@ -59,13 +59,12 @@
 							 Name="SearchResultsListBox"
 							 Background="Transparent"
 							 AutoScrollToSelectedItem="True"
-							 Items="{Binding SearchItems}"
+							 ItemsSource="{Binding SearchItems}"
 							 SelectedItem="{Binding SelectedItem}"
-							 
 							 IsTextSearchEnabled="True"
 							 SelectionMode="Single"
-							 CornerRadius="2"
-							 ZIndex="0"
+							 CornerRadius="3"
+							 ZIndex="1"
 							 BorderBrush="DarkBlue">
 
 						<ListBox.ItemTemplate>
@@ -87,21 +86,28 @@
 								</StackPanel>
 							</DataTemplate>
 						</ListBox.ItemTemplate>
-
 					</ListBox>
 
+					<Border Opacity="0.5" Background="#282828">
+						<Border.Effect>
+							<BlurEffect Radius="5"/>
+						</Border.Effect>
+					</Border>
+
+					<!--
 					<ExperimentalAcrylicBorder IsHitTestVisible="False"
-											   CornerRadius="2"
+											   CornerRadius="3"
 											   ZIndex="-1">
 						<ExperimentalAcrylicBorder.Material>
 							<ExperimentalAcrylicMaterial
 								BackgroundSource="Digger"
 								TintColor="Black"
+								
 								TintOpacity="1"
 								MaterialOpacity="0.8"/>
 						</ExperimentalAcrylicBorder.Material>
 					</ExperimentalAcrylicBorder>
-
+					-->
 				</Grid>
 
 			</Grid>

@@ -12,9 +12,9 @@
 	<UserControl.Content>
 		<Grid ShowGridLines="False">
 		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="4*"/>
+			<ColumnDefinition Width="4*" MaxWidth="350"/>
 			<ColumnDefinition Width="13*"/>
-			
+			<ColumnDefinition Width="3*"/>
 		</Grid.ColumnDefinitions>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="*"/>
@@ -26,25 +26,25 @@
 			VerticalAlignment="Top"
 			HorizontalAlignment="Center"
 			Orientation="Vertical">
-			
-			<Image
-				Name="imageInfo"
-				Grid.Column="0"
-				Grid.Row="1"
-				HorizontalAlignment="Center"
-				VerticalAlignment="Top"
-				MaxHeight="200"
-				Margin="0"
-				Source="{Binding AnimeInfoImageBitmap}"/>
+
+			<Border ClipToBounds="True" CornerRadius="3" Margin="10, 10,10, 0">
+				<Image
+					Name="imageInfo"
+					Grid.Column="0"
+					Grid.Row="1"
+					HorizontalAlignment="Center"
+					VerticalAlignment="Top"
+					Source="{Binding AnimeInfoImageBitmap}"/>
+			</Border>
 			
 			<Button
+				CornerRadius="3"
 				Name="playButton"
 				Grid.Column="0"
 				Grid.Row="1"
 				Content="Play !"
-				Width="150"
 				HorizontalContentAlignment="Center"
-				HorizontalAlignment="Center"
+				HorizontalAlignment="Stretch"
 				Margin="10"
 				IsVisible="{Binding IsPlayButtonVisible}"/>
 		</StackPanel>
@@ -64,6 +64,7 @@
 				FontSize="20"
 				Grid.Column="1"
 				Grid.Row="1"
+				Margin="5,5,0,0"
 				Content="{Binding AnimeInfoTitleLabel}"
 				/>
 			<Label
@@ -73,12 +74,13 @@
 				Margin="0,15,0,0"
 				HorizontalAlignment="Left">
 				<TextBlock
+					
 					Name="textBlockDescriptionInfo"
-					MaxWidth="450"
 					TextWrapping="Wrap"
 					Text="{Binding AnimeInfoDescriptionTextBlock}">
 				</TextBlock>
 			</Label>
+			
 		</StackPanel>
 	</Grid>
 	</UserControl.Content>

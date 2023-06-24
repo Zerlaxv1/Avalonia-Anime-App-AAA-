@@ -31,38 +31,5 @@ namespace Avalonia_RandomAnimeTorrentApp.Views
             mlabelTitleInfo.Content = "Title2";
             this.DataContext = new AnimeInfoViewModel();
         }
-
-        /*
-
-        /// <summary>
-        /// need to be fixed but in a near futur it will display the results
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="selected"></param>
-        public async void DisplayResults(object sender, MyItem selected)
-        {
-            //selected.Tags[0]
-
-
-
-            var animeInfoControl = sender as AnimeInfo;
-            if (animeInfoControl == null)
-            {
-                // Traitement d'erreur
-                return;
-            }
-
-            await Dispatcher.UIThread.InvokeAsync(() =>
-            {
-                animeInfoControl.mlabelTitleInfo.Content = "uwu";
-                (DataContext as AnimeInfoViewModel).AnimeInfoDescriptionTextBlock = "98729874648564";
-                ((AnimeInfoViewModel)animeInfoControl.DataContext).AnimeInfoDescriptionTextBlock = "sdiufguisdgfyuisdgfuisdgfuysdgfyu";
-                animeInfoControl.mtextBlockDescriptionInfo.Text = "owo2375574546";
-            });
-
-        }
-
-        */
-
     }
 }

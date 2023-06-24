@@ -25,12 +25,12 @@ namespace Avalonia_RandomAnimeTorrentApp.ViewModels
     public partial class SearchAndInfoViewModel : ObservableObject
     {
         #region Public Properties
-        System.Timers.Timer timer;
+        readonly System.Timers.Timer timer;
         /// <summary>
         /// List of Search Results based on the inputed TextBox string
         /// </summary>
         [ObservableProperty]
-        private ObservableCollection<string> searchResults = new ObservableCollection<string>();
+        private ObservableCollection<string> searchResults = new();
 
         /// <summary>
         /// The "Greeting" string.... TODO: I don't think this is used
@@ -48,7 +48,7 @@ namespace Avalonia_RandomAnimeTorrentApp.ViewModels
         /// Result of the search for web results based on the TextBox Text
         /// </summary>
         [ObservableProperty]
-        private List<MyItem> searchItems = new List<MyItem>();
+        private List<MyItem> searchItems = new();
 
         /// <summary>
         /// I don't know why this is a string... it should be an ObservableCollection<string> I would think
@@ -180,13 +180,13 @@ namespace Avalonia_RandomAnimeTorrentApp.ViewModels
             string Id = JObject.Parse(Tag)["id"].ToString();
 
             // get the data from the api
-            Uri url = new Uri($"https://find-my-anime.dtimur.de/api?id={Id}&provider=Anilist&includeAdult=true&collectionConsent=false\";");
+            Uri url = new($"https://find-my-anime.dtimur.de/api?id={Id}&provider=Anilist&includeAdult=true&collectionConsent=false\";");
             JObject response = await WebDb.CallApiJson(url);
 
             /// todo: fix this
             // add the data to the tags
             Array.Resize(ref Tags, Tags.Length + 1);
-            Tags[Tags.Length - 1] = response.ToString();
+            Tags[^1] = response.ToString();
 
             selectedItem.Tags = Tags;
 
@@ -250,7 +250,7 @@ namespace Avalonia_RandomAnimeTorrentApp.ViewModels
             {""search"": """ + searchText + @"""}";
 
             ///the url to use with graphql
-            Uri url = new Uri("https://graphql.anilist.co");
+            Uri url = new("https://graphql.anilist.co");
 
             ///call the api
             JObject ApiResponse = await WebDb.CallApiGraphQl(query, variables, url) ?? throw new Exception("Anlist api return null");
@@ -262,8 +262,8 @@ namespace Avalonia_RandomAnimeTorrentApp.ViewModels
             ///
 
             // TODO:  I didn't change the imglist because I don't think you have it set up yet
-            List<Bitmap> imglist = new List<Bitmap>();
-            List<MyItem> items = new List<MyItem>();
+            List<Bitmap> imglist = new();
+            List<MyItem> items = new();
 
             ///set the index to 0
             int index = 0;
@@ -271,7 +271,7 @@ namespace Avalonia_RandomAnimeTorrentApp.ViewModels
             foreach (var r in results)
             {
                 ///download the img
-                WebClient client = new WebClient();
+                WebClient client = new();
                 var img = client.DownloadData(new Uri(r["coverImage"]["medium"].ToString()));
 
                 ///convert the img to a bitmap
