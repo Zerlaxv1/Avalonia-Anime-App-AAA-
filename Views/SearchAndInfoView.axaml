@@ -23,7 +23,7 @@
 				</Grid.ColumnDefinitions>
 				<Grid.RowDefinitions>
 					<RowDefinition Height="Auto"/>
-					<RowDefinition Height="2*" MinHeight="200" MaxHeight="355"/>
+					<RowDefinition Height="2*" MinHeight="200" MaxHeight="{Binding ResultHeight}"/>
 					<RowDefinition Height="*"/>
 				</Grid.RowDefinitions>
 				<Panel Grid.Row="2"/>

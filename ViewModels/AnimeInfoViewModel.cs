@@ -1,20 +1,23 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Messaging.Messages;
-using static GraphQL.Validation.Rules.OverlappingFieldsCanBeMerged;
 using System;
 using Avalonia_RandomAnimeTorrentApp.Models;
 using CommunityToolkit.Mvvm.Messaging;
 using Newtonsoft.Json.Linq;
 using Avalonia_RandomAnimeTorrentApp.DataAccess;
-using Avalonia.Media.Immutable;
-using System.Drawing;
-using Avalonia.Media;
-using System.Globalization;
+using CommunityToolkit.Mvvm.Input;
+using System.Collections.Generic;
+using System.Linq;
+using System.IO;
+using System.Threading;
 
 namespace Avalonia_RandomAnimeTorrentApp.ViewModels
 {
     internal partial class AnimeInfoViewModel : ObservableObject
     {
+
+        JObject requestFindMyAnime;
+        JObject requestAnilist;
+
         [ObservableProperty]
         public string animeInfoDescriptionTextBlock;
 
@@ -40,12 +43,12 @@ namespace Avalonia_RandomAnimeTorrentApp.ViewModels
             //test
 
             //transform the string into a json object
-            JObject requestFindMyAnime = JObject.Parse(message.Tags[1]);
-            JObject requestAnilist = JObject.Parse(message.Tags[0]);
+            requestFindMyAnime = JObject.Parse(message.Tags[1]);
+            requestAnilist = JObject.Parse(message.Tags[0]);
 
             //request image avec webdb
             Uri imgUri = new Uri(requestAnilist["coverImage"]["extraLarge"].ToString());
-            Avalonia.Media.Imaging.Bitmap img = WebDb.CallApiBitmap(imgUri).Result;
+            Avalonia.Media.Imaging.Bitmap img = await WebDb.CallApiBitmap(imgUri);
 
             string Description = requestFindMyAnime["data"][0]["description"].ToString().Replace("<br>", "\n").Replace("<i>", "").Replace("</i>", "");
             
@@ -65,6 +68,49 @@ namespace Avalonia_RandomAnimeTorrentApp.ViewModels
             AnimeInfoDescriptionTextBlock = Description;
             AnimeInfoTitleLabel = requestFindMyAnime["data"][0]["title"].ToString();
             AnimeInfoImageBitmap = img;
+        }
+
+        [RelayCommand]
+        public async void PlayButton()
+        {
+            int aniDBId = Convert.ToInt32(requestFindMyAnime["data"][0]["providerMapping"]["AniDB"]);
+
+            Uri uri = new($"https://feed.animetosho.org/json?aids={aniDBId}");
+            JObject response = await WebDb.CallApiJson(uri);
+
+            List<JToken> values = response["data"].ToList();
+            List<Torrents> torrents = new List<Torrents>();
+            Torrents TorrentWithTheMostSeeders = null;
+
+            foreach (var i in values)
+            {
+                
+                var seeders = i["seeders"].ToString();
+                var leechers = i["leechers"].ToString();
+
+                if ( seeders == "" || seeders == "0") {continue;}
+
+                Torrents tor = new()
+                {
+                    Seeders = Convert.ToInt32(seeders),
+                    Leechers = Convert.ToInt32(leechers),
+                    TorrentUrl = i["torrent_url"].ToString(),
+                    Title = i["title"].ToString()
+                };
+
+                torrents.Add(tor);
+                
+                if (TorrentWithTheMostSeeders == null || tor.Seeders > TorrentWithTheMostSeeders.Seeders)
+                {
+                    TorrentWithTheMostSeeders = tor;
+                }
+
+            }
+
+            CancellationToken cancelToken = new CancellationToken();
+
+            Stream stream = await WebDb.Torrenting(new Uri(TorrentWithTheMostSeeders.TorrentUrl), "torrrent", cancelToken);
+
         }
     }
 }

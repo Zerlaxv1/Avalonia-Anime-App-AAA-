@@ -46,7 +46,8 @@
 				HorizontalContentAlignment="Center"
 				HorizontalAlignment="Stretch"
 				Margin="10"
-				IsVisible="{Binding IsPlayButtonVisible}"/>
+				IsVisible="{Binding IsPlayButtonVisible}"
+				Command="{Binding PlayButtonCommand}"	/>
 		</StackPanel>
 			
 		<StackPanel

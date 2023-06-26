@@ -38,6 +38,9 @@ namespace Avalonia_RandomAnimeTorrentApp.ViewModels
         [ObservableProperty]
         private string greeting = "Present ?";
 
+        [ObservableProperty]
+        private int resultHeight = 355;
+
         /// <summary>
         /// Flag to determine if the GridListBox should be visible
         /// </summary>
@@ -296,7 +299,9 @@ namespace Avalonia_RandomAnimeTorrentApp.ViewModels
             _ = Dispatcher.UIThread.InvokeAsync(() =>
             {
                 SearchItems = items;
-                
+                ResultHeight = items.Count * 71;
+
+
             });
         }
 

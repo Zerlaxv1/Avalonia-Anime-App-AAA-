@@ -9,11 +9,17 @@ using System.Threading.Tasks;
 using System.Drawing;
 using System.IO;
 using System.Net;
+using MonoTorrent.Client;
+using MonoTorrent;
+using System.Linq;
+using System.Threading;
 
 namespace Avalonia_RandomAnimeTorrentApp.DataAccess
 {
     public static class WebDb
     {
+        private static readonly HttpClient client = new();
+
         /// <summary>
         /// call a graphql request and return the response as a JObject
         /// </summary>
@@ -29,8 +35,6 @@ namespace Avalonia_RandomAnimeTorrentApp.DataAccess
                 Query = Querie,
                 Variables = Varibles
             };
-
-            var client = new HttpClient();
             GraphQLHttpClient graphQLClient = new GraphQLHttpClient(new GraphQLHttpClientOptions { EndPoint = Url }, new NewtonsoftJsonSerializer(), client);
 
             var request = new HttpRequestMessage
@@ -60,8 +64,7 @@ namespace Avalonia_RandomAnimeTorrentApp.DataAccess
         /// <returns></returns>
         public static async Task<JObject> CallApiJson(Uri url)
         {
-            HttpClient client = new HttpClient();
-            HttpResponseMessage response = await client.GetAsync(url);
+            HttpResponseMessage response = await client.GetAsync(url).ConfigureAwait(true);
             string responseBody = await response.Content.ReadAsStringAsync();
             JObject jsonResponse = JObject.Parse("{\"data\":" + responseBody + "}");
             return jsonResponse;
@@ -74,11 +77,60 @@ namespace Avalonia_RandomAnimeTorrentApp.DataAccess
         /// <returns></returns>
         public static async Task<Avalonia.Media.Imaging.Bitmap> CallApiBitmap(Uri url)
         {
-            WebClient client = new();
-            var responseData = client.DownloadData(url);
-            Stream stream = new MemoryStream(responseData);
+            var response = await client.GetAsync(url);
+            var stream = await response.Content.ReadAsStreamAsync();
             var image = new Avalonia.Media.Imaging.Bitmap(stream);
             return image;
+        }
+
+        /// <summary>
+        /// Download the torrent as file ( Current Directoryand / workspaceTorrent) and return it as a Stream
+        /// </summary>
+        /// <param name="uri"> uri to the .torrent</param>
+        /// <param name="name"> name of the torrent, else will be "Torrent"</param>
+        /// <param name="cToken"> Cancellation token, optional, else will be created but not returned</param>
+        /// <returns></returns>
+        public static async Task<Stream> Torrenting(Uri uri, String name = "Torrent", CancellationToken cToken = new())
+        {
+            ClientEngine engine = new ClientEngine();
+
+            string? workspace = Path.Combine(Environment.CurrentDirectory, @"workspaceTorrent");
+            if (!Directory.Exists(workspace)) { Directory.CreateDirectory(workspace); }
+
+            Torrent torrent = await Torrent.LoadAsync(uri, Path.Combine(workspace, name + ".torrent"));
+
+
+            //var manager = await engine.AddStreamingAsync(magnet, @"C:\Users\Nino\Downloads");
+            TorrentManager manager = await engine.AddStreamingAsync(torrent, workspace);
+
+            manager.PeerConnected += (o, a) =>
+            {
+                Console.WriteLine($"MonoTorrent -> Connection succeeded: {a.Peer.Uri}");
+
+            };
+            //manager.ConnectionAttemptFailed += (o, a) => Console.WriteLine($"MonoTorrent -> Connection failed: {a.Peer.ConnectionUri} - {a.Reason} - {a.Peer}");
+
+            await manager.StartAsync();
+
+            if (!manager.HasMetadata)
+            {
+                await manager.WaitForMetadataAsync();
+                Console.WriteLine("MonoTorrent -> Metadata Downloaded");
+            }
+
+            ITorrentFileInfo largestFile = manager.Files.OrderByDescending(f => f.Length).First();
+
+            foreach (var file in manager.Files)
+            {
+                if (file != largestFile)
+                {
+                    await manager.SetFilePriorityAsync(file, Priority.DoNotDownload);
+                }
+            }
+
+            Stream stream = await manager.StreamProvider.CreateStreamAsync(largestFile, false, cToken);
+
+            return stream;
         }
     }
 }
