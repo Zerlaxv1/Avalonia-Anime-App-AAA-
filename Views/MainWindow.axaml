@@ -11,5 +11,17 @@
         x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/avalonia-logo.ico"
         Title="RandomAnimeTorrentApp">
-	<views:SearchAndInfoView />
+	
+	<Window.DataTemplates>
+		
+		<DataTemplate DataType="{x:Type vm:SearchAndInfoViewModel}">
+			<views:SearchAndInfoView />
+		</DataTemplate>
+		<DataTemplate DataType="{x:Type vm:PlayerViewModel}">
+			<views:Player />
+		</DataTemplate>
+		
+	</Window.DataTemplates>
+	
+	<ContentControl Content="{Binding Content}" />
 </Window>

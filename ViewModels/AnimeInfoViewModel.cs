@@ -111,6 +111,7 @@ namespace Avalonia_RandomAnimeTorrentApp.ViewModels
 
             Stream stream = await WebDb.Torrenting(new Uri(TorrentWithTheMostSeeders.TorrentUrl), "torrrent", cancelToken);
 
+            WeakReferenceMessenger.Default.Send<Stream>(stream);
         }
     }
 }

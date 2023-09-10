@@ -221,30 +221,30 @@ namespace Avalonia_RandomAnimeTorrentApp.ViewModels
         {
 
             var query = @"
-            query ($search: String) {
-  Page(page: 1, perPage: 5) {
-    pageInfo {
-      total
-      currentPage
-      lastPage
-      hasNextPage
-      perPage
-    }
-    media(search: $search, type: ANIME) {
-      id
-      title {
-        romaji(stylised: true)
-        english(stylised: true)
-      }
-      coverImage {
-        extraLarge
-        large
-        medium
-        color
-      }
-    }
-  }
-}
+                query ($search: String) {
+                  Page(page: 1, perPage: 5) {
+                    pageInfo {
+                      total
+                      currentPage
+                      lastPage
+                      hasNextPage
+                      perPage
+                    }
+                    media(search: $search, type: ANIME) {
+                      id
+                      title {
+                        romaji(stylised: true)
+                        english(stylised: true)
+                      }
+                      coverImage {
+                        extraLarge
+                        large
+                        medium
+                        color
+                      }
+                    }
+                  }
+                }
 
             ";
 

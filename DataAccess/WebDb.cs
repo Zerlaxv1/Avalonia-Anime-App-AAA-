@@ -18,6 +18,9 @@ namespace Avalonia_RandomAnimeTorrentApp.DataAccess
 {
     public static class WebDb
     {
+        /// <summary>
+        /// one instance of HttpClient for all the application
+        /// </summary>
         private static readonly HttpClient client = new();
 
         /// <summary>
@@ -92,34 +95,30 @@ namespace Avalonia_RandomAnimeTorrentApp.DataAccess
         /// <returns></returns>
         public static async Task<Stream> Torrenting(Uri uri, String name = "Torrent", CancellationToken cToken = new())
         {
-            ClientEngine engine = new ClientEngine();
+            ClientEngine engine = new();
 
+            //define the workspace
             string? workspace = Path.Combine(Environment.CurrentDirectory, @"workspaceTorrent");
+
+            // if the workspace doesn't exist, create it
             if (!Directory.Exists(workspace)) { Directory.CreateDirectory(workspace); }
 
-            Torrent torrent = await Torrent.LoadAsync(uri, Path.Combine(workspace, name + ".torrent"));
+            //download and load the torrent
+            Torrent torrent = await Torrent.LoadAsync(client, uri, Path.Combine(workspace, name + ".torrent"));
 
-
-            //var manager = await engine.AddStreamingAsync(magnet, @"C:\Users\Nino\Downloads");
+            //add the torrent to the engine to make the manager
             TorrentManager manager = await engine.AddStreamingAsync(torrent, workspace);
 
-            manager.PeerConnected += (o, a) =>
-            {
-                Console.WriteLine($"MonoTorrent -> Connection succeeded: {a.Peer.Uri}");
-
-            };
-            //manager.ConnectionAttemptFailed += (o, a) => Console.WriteLine($"MonoTorrent -> Connection failed: {a.Peer.ConnectionUri} - {a.Reason} - {a.Peer}");
-
+            //start the download
             await manager.StartAsync();
 
-            if (!manager.HasMetadata)
-            {
-                await manager.WaitForMetadataAsync();
-                Console.WriteLine("MonoTorrent -> Metadata Downloaded");
-            }
+            //wait for metadata because we need it, but in general we already have it
+            if (!manager.HasMetadata) { await manager.WaitForMetadataAsync(cToken); }
 
-            ITorrentFileInfo largestFile = manager.Files.OrderByDescending(f => f.Length).First();
+            //get the largest file (so the video, it's temporary)
+            ITorrentManagerFile largestFile = manager.Files.OrderByDescending(f => f.Length).First();
 
+            //dont download the others files
             foreach (var file in manager.Files)
             {
                 if (file != largestFile)
@@ -128,6 +127,7 @@ namespace Avalonia_RandomAnimeTorrentApp.DataAccess
                 }
             }
 
+            //create the stream
             Stream stream = await manager.StreamProvider.CreateStreamAsync(largestFile, false, cToken);
 
             return stream;

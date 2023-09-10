@@ -1,0 +1,33 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vlc="using:LibVLCSharp.Avalonia.Unofficial"
+		mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="Avalonia_RandomAnimeTorrentApp.Views.Player"
+		xmlns:vm="clr-namespace:Avalonia_RandomAnimeTorrentApp.ViewModels"
+		xmlns:views="clr-namespace:Avalonia_RandomAnimeTorrentApp.Views">
+	<UserControl.DataContext>
+		<vm:PlayerViewModel/>
+	</UserControl.DataContext>
+	<Grid>
+		<Panel Background="Black">
+			<vlc:VideoView
+                x:Name="VideoViewer"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+				MediaPlayer="{Binding MediaPlayerView}">
+
+				<!--  Content  -->
+				<!--
+				<Panel
+					VerticalAlignment="Bottom"
+					Opacity="0.8"
+					Background="Gray">
+					<TextBlock>This text overlays the videoview</TextBlock>
+				</Panel>
+				-->
+			</vlc:VideoView>
+		</Panel>
+	</Grid>
+</UserControl>
