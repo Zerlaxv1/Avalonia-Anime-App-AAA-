@@ -252,11 +252,8 @@ namespace Avalonia_RandomAnimeTorrentApp.ViewModels
             var variables = @"
             {""search"": """ + searchText + @"""}";
 
-            ///the url to use with graphql
-            Uri url = new("https://graphql.anilist.co");
-
             ///call the api
-            JObject ApiResponse = await WebDb.CallApiGraphQl(query, variables, url) ?? throw new Exception("Anlist api return null");
+            JObject ApiResponse = await Anilist.CallApi(query, variables) ?? throw new Exception("Anlist api return null");
 
             ///get the results and filter it a little
             var results = ApiResponse["Page"]["media"].ToList();

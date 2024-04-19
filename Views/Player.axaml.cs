@@ -22,6 +22,7 @@ namespace Avalonia_RandomAnimeTorrentApp.Views
 
         public void Player_Opened(object sender, EventArgs e)
         {
+
             if (mVideoView != null && mVideoView.PlatformHandle != null && ViewModel!.MediaPlayerView != null)
             {
                 
@@ -29,6 +30,7 @@ namespace Avalonia_RandomAnimeTorrentApp.Views
                 mVideoView.MediaPlayer.SetHandle(mVideoView.PlatformHandle);
                 
             }
+            
         }
 
     }

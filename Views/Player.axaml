@@ -5,8 +5,7 @@
         xmlns:vlc="using:LibVLCSharp.Avalonia.Unofficial"
 		mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="Avalonia_RandomAnimeTorrentApp.Views.Player"
-		xmlns:vm="clr-namespace:Avalonia_RandomAnimeTorrentApp.ViewModels"
-		xmlns:views="clr-namespace:Avalonia_RandomAnimeTorrentApp.Views">
+		xmlns:vm="clr-namespace:Avalonia_RandomAnimeTorrentApp.ViewModels">
 	<UserControl.DataContext>
 		<vm:PlayerViewModel/>
 	</UserControl.DataContext>
@@ -29,5 +28,6 @@
 				-->
 			</vlc:VideoView>
 		</Panel>
+		<TextPresenter Text="Player Loading..." IsVisible="True"></TextPresenter>
 	</Grid>
 </UserControl>

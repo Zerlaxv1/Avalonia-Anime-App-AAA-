@@ -21,44 +21,7 @@ namespace Avalonia_RandomAnimeTorrentApp.DataAccess
         /// <summary>
         /// one instance of HttpClient for all the application
         /// </summary>
-        private static readonly HttpClient client = new();
-
-        /// <summary>
-        /// call a graphql request and return the response as a JObject
-        /// </summary>
-        /// <param name="Querie"></param>
-        /// <param name="Varibles"></param>
-        /// <param name="Url"></param>
-        /// <returns></returns>
-        /// <exception cref="Exception"></exception>
-        public static async Task<JObject> CallApiGraphQl(string Querie, string Varibles, Uri Url)
-        {
-            var requestObject = new GraphQLRequest
-            {
-                Query = Querie,
-                Variables = Varibles
-            };
-            GraphQLHttpClient graphQLClient = new GraphQLHttpClient(new GraphQLHttpClientOptions { EndPoint = Url }, new NewtonsoftJsonSerializer(), client);
-
-            var request = new HttpRequestMessage
-            {
-                Method = HttpMethod.Post,
-                RequestUri = Url,
-                Content = new StringContent(System.Text.Json.JsonSerializer.Serialize(requestObject), Encoding.UTF8, "application/json")
-            };
-
-            //var response = await client.SendAsync(request);
-            GraphQLResponse<dynamic> response = await graphQLClient.SendQueryAsync<dynamic>(requestObject);
-
-            if (response.Errors != null)
-            {
-                throw new Exception("fetching anilist api failed");
-            }
-            JObject responseJson = response.Data;
-            //JObject jsonResult = JObject.Parse(responseJson.ToString());
-
-            return responseJson;
-        }
+        private static readonly HttpClient Client = new();
 
         /// <summary>
         /// call a Json request and return the response as a JObject
@@ -67,7 +30,7 @@ namespace Avalonia_RandomAnimeTorrentApp.DataAccess
         /// <returns></returns>
         public static async Task<JObject> CallApiJson(Uri url)
         {
-            HttpResponseMessage response = await client.GetAsync(url).ConfigureAwait(true);
+            HttpResponseMessage response = await Client.GetAsync(url).ConfigureAwait(true);
             string responseBody = await response.Content.ReadAsStringAsync();
             JObject jsonResponse = JObject.Parse("{\"data\":" + responseBody + "}");
             return jsonResponse;
@@ -80,7 +43,7 @@ namespace Avalonia_RandomAnimeTorrentApp.DataAccess
         /// <returns></returns>
         public static async Task<Avalonia.Media.Imaging.Bitmap> CallApiBitmap(Uri url)
         {
-            var response = await client.GetAsync(url);
+            var response = await Client.GetAsync(url);
             var stream = await response.Content.ReadAsStreamAsync();
             var image = new Avalonia.Media.Imaging.Bitmap(stream);
             return image;
@@ -104,7 +67,7 @@ namespace Avalonia_RandomAnimeTorrentApp.DataAccess
             if (!Directory.Exists(workspace)) { Directory.CreateDirectory(workspace); }
 
             //download and load the torrent
-            Torrent torrent = await Torrent.LoadAsync(client, uri, Path.Combine(workspace, name + ".torrent"));
+            Torrent torrent = await Torrent.LoadAsync(Client, uri, Path.Combine(workspace, name + ".torrent"));
 
             //add the torrent to the engine to make the manager
             TorrentManager manager = await engine.AddStreamingAsync(torrent, workspace);
