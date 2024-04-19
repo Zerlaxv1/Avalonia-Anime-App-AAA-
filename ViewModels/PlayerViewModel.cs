@@ -16,12 +16,9 @@ namespace Avalonia_RandomAnimeTorrentApp.ViewModels
         LibVLC? _libVLC = new();
         Media media;
 
-        public PlayerViewModel()
+        public PlayerViewModel(Stream stream)
         {
-            WeakReferenceMessenger.Default.Register<Stream>(this, (r, m) =>
-            {
-                playBack(m);
-            });
+            playBack(stream);
         }
 
          public void playBack(Stream stream)

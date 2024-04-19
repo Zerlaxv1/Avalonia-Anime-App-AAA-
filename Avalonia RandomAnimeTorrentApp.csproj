@@ -48,4 +48,7 @@
   <ItemGroup>
     <Folder Include="Style\" />
   </ItemGroup>
+  <PropertyGroup>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+  </PropertyGroup>
 </Project>

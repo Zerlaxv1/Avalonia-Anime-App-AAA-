@@ -20,10 +20,10 @@ namespace Avalonia_RandomAnimeTorrentApp.ViewModels
 
             WeakReferenceMessenger.Default.Register<Stream>(this, (r, m) =>
             {
-                ChangeContent<PlayerViewModel>();
+                ChangeContent<PlayerViewModel>(m);
             });
         }
-        private void ChangeContent<T>() where T : class
+        private void ChangeContent<T>(Stream stream = null) where T : class
         {
             Type type = typeof(T);
 
@@ -41,7 +41,7 @@ namespace Avalonia_RandomAnimeTorrentApp.ViewModels
                 }
                 else if (type == typeof(PlayerViewModel))
                 {
-                    viewModelCache[type] = new PlayerViewModel();
+                    viewModelCache[type] = new PlayerViewModel(stream);
                 }
 
                 Content = viewModelCache[type];

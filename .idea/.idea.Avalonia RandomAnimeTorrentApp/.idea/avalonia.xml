@@ -4,6 +4,7 @@
     <option name="projectPerEditor">
       <map>
         <entry key="App.axaml" value="Avalonia RandomAnimeTorrentApp.csproj" />
+        <entry key="Views/AnimeInfo.axaml" value="Avalonia RandomAnimeTorrentApp.csproj" />
         <entry key="Views/MainWindow.axaml" value="Avalonia RandomAnimeTorrentApp.csproj" />
         <entry key="Views/Player.axaml" value="Avalonia RandomAnimeTorrentApp.csproj" />
         <entry key="Views/SearchAndInfoView.axaml" value="Avalonia RandomAnimeTorrentApp.csproj" />

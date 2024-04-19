@@ -27,4 +27,7 @@ LibVLC needs to be installed separately, see VideoLAN.LibVLC.* packages.
     <PackageReference Include="Avalonia.ReactiveUI" Version="11.0.4" />
     <PackageReference Include="LibVLCSharp" Version="3.8.0" />
   </ItemGroup>
+    <PropertyGroup>
+        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    </PropertyGroup>
 </Project>

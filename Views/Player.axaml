@@ -6,13 +6,13 @@
 		mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="Avalonia_RandomAnimeTorrentApp.Views.Player"
 		xmlns:vm="clr-namespace:Avalonia_RandomAnimeTorrentApp.ViewModels">
-	<UserControl.DataContext>
-		<vm:PlayerViewModel/>
-	</UserControl.DataContext>
-	<Grid
-		Row="0"
-		Column="0"
-		>
+	<Grid>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="*"/>
+		</Grid.ColumnDefinitions>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="*"/>
+		</Grid.RowDefinitions>
 		<Panel Background="Black"
 		       Grid.Column="0"
 		       Grid.Row="0">
