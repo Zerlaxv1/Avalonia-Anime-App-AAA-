@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using System;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
 using LibVLCSharp.Shared;
 using System.Diagnostics;
@@ -8,8 +9,9 @@ namespace Avalonia_RandomAnimeTorrentApp.ViewModels
 {
     public partial class PlayerViewModel : ObservableObject
     {
-        [ObservableProperty]
-        public MediaPlayer mediaPlayerView;
+        [ObservableProperty] private MediaPlayer mediaPlayerView;
+
+        [ObservableProperty] private bool isLoading = true;
 
         LibVLC? _libVLC = new();
         Media media;
@@ -19,7 +21,7 @@ namespace Avalonia_RandomAnimeTorrentApp.ViewModels
             WeakReferenceMessenger.Default.Register<Stream>(this, (r, m) =>
             {
                 playBack(m);
-            }); 
+            });
         }
 
          public void playBack(Stream stream)
@@ -32,12 +34,13 @@ namespace Avalonia_RandomAnimeTorrentApp.ViewModels
             {
                 if (MediaPlayerView.IsSeekable == true)
                 {
-                    Debug.WriteLine("Seekable");
+                    Debug.WriteLine(" Log : Video seekable");
+                    IsLoading = false;
                     MediaPlayerView.Play();
                     media.Dispose();
                 } else
                 {
-                    Debug.WriteLine("Not seekable");
+                    Debug.WriteLine("Error : Video not seekable");
                 }
             };
 

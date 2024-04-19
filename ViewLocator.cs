@@ -22,10 +22,7 @@ namespace Avalonia_RandomAnimeTorrentApp
 
         public bool Match(object data)
         {
-            //return false;
             return data is ViewModelBase;
         }
-
-
     }
 }

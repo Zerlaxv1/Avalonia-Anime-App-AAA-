@@ -9,8 +9,13 @@
 	<UserControl.DataContext>
 		<vm:PlayerViewModel/>
 	</UserControl.DataContext>
-	<Grid>
-		<Panel Background="Black">
+	<Grid
+		Row="0"
+		Column="0"
+		>
+		<Panel Background="Black"
+		       Grid.Column="0"
+		       Grid.Row="0">
 			<vlc:VideoView
                 x:Name="VideoViewer"
                 HorizontalAlignment="Stretch"
@@ -28,6 +33,15 @@
 				-->
 			</vlc:VideoView>
 		</Panel>
-		<TextPresenter Text="Player Loading..." IsVisible="True"></TextPresenter>
+		<TextPresenter Text="Player Loading..."
+		               IsVisible="{Binding IsLoading}"
+						Grid.Column="0"
+						Grid.Row="0"
+		               VerticalAlignment="Center"
+		               HorizontalAlignment="Center"
+		               FontSize="20"
+		               FontWeight="Bold"
+		               Foreground="White"
+		               ></TextPresenter>
 	</Grid>
 </UserControl>
