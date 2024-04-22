@@ -13,38 +13,42 @@ namespace Avalonia_RandomAnimeTorrentApp.ViewModels
 
         [ObservableProperty] private bool isLoading = true;
 
-        LibVLC? _libVLC = new();
-        Media media;
+        private readonly LibVLC? VLC = new();
 
         public PlayerViewModel(Stream stream)
         {
-            playBack(stream);
+            Core.Initialize();
+            if (stream != null)
+            {
+                playBack(stream);
+            }
         }
 
-         public void playBack(Stream stream)
-         {
-            media = new Media(_libVLC, new StreamMediaInput(stream));
+        public void playBack(Stream stream)
+        {
+            Media media = new Media(VLC, new StreamMediaInput(stream));
 
             MediaPlayerView = new MediaPlayer(media);
 
-            MediaPlayerView.SeekableChanged += (s,e) =>
+            if (MediaPlayerView.IsSeekable)
             {
-                if (MediaPlayerView.IsSeekable == true)
+                MediaPlayerView.Play();
+                Debug.WriteLine(" Log : Video seekable");
+                IsLoading = false;
+                media.Dispose();
+            }
+            else
+            {
+                Debug.WriteLine("Error : Video not seekable rn, waiting for seekable event");
+                MediaPlayerView.Play();
+
+                MediaPlayerView.SeekableChanged += (s, e) =>
                 {
-                    Debug.WriteLine(" Log : Video seekable");
+                    Debug.WriteLine(" Log : Video now seekable");
                     IsLoading = false;
-                    MediaPlayerView.Play();
                     media.Dispose();
-                } else
-                {
-                    Debug.WriteLine("Error : Video not seekable");
-                }
-            };
-
-            MediaPlayerView.Play();
-            media.Dispose();
-
-            Debug.WriteLine(MediaPlayerView.IsSeekable);
-         }
+                };
+            }
+        }
     }
 }

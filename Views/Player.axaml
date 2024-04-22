@@ -22,26 +22,26 @@
                 VerticalAlignment="Stretch"
 				MediaPlayer="{Binding MediaPlayerView}">
 
-				<!--  Content  -->
-				<!--
-				<Panel
-					VerticalAlignment="Bottom"
-					Opacity="0.8"
-					Background="Gray">
-					<TextBlock>This text overlays the videoview</TextBlock>
-				</Panel>
-				-->
+				<Grid>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="0"/>
+					</Grid.RowDefinitions>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="0"/>
+					</Grid.ColumnDefinitions>
+					<TextPresenter Text="Player Loading..."
+					               IsVisible="{Binding IsLoading}"
+					               Grid.Column="0"
+					               Grid.Row="0"
+					               VerticalAlignment="Center"
+					               HorizontalAlignment="Center"
+					               FontSize="20"
+					               FontWeight="Bold"
+					               Foreground="White"
+					></TextPresenter>
+				</Grid>
+
 			</vlc:VideoView>
 		</Panel>
-		<TextPresenter Text="Player Loading..."
-		               IsVisible="{Binding IsLoading}"
-						Grid.Column="0"
-						Grid.Row="0"
-		               VerticalAlignment="Center"
-		               HorizontalAlignment="Center"
-		               FontSize="20"
-		               FontWeight="Bold"
-		               Foreground="White"
-		               ></TextPresenter>
 	</Grid>
 </UserControl>

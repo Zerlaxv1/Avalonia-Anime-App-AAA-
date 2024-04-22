@@ -3,6 +3,7 @@ using GraphQL.Client.Serializer.Newtonsoft;
 using GraphQL;
 using Newtonsoft.Json.Linq;
 using System;
+using System.Diagnostics;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -89,6 +90,18 @@ namespace Avalonia_RandomAnimeTorrentApp.DataAccess
                     await manager.SetFilePriorityAsync(file, Priority.DoNotDownload);
                 }
             }
+
+            System.Threading.Timer timer = new((e) =>
+            {
+                Debug.WriteLine("file: " + largestFile.Path +
+                                ", progress: " + manager.Progress +
+                                ", download speed: " + manager.Monitor.DownloadRate +
+                                ", upload speed: " + manager.Monitor.UploadRate +
+                                ", peers: " + manager.Peers.Available +
+                                ", seeds: " + manager.Peers.Seeds +
+                                ", leechers: " + manager.Peers.Leechs +
+                                ", downloaded: " + manager.Monitor.DataBytesReceived);
+            }, null, TimeSpan.Zero, TimeSpan.FromSeconds(3));
 
             //create the stream
             Stream stream = await manager.StreamProvider.CreateStreamAsync(largestFile, false, cToken);

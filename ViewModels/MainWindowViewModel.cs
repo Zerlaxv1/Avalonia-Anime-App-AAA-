@@ -23,7 +23,7 @@ namespace Avalonia_RandomAnimeTorrentApp.ViewModels
                 ChangeContent<PlayerViewModel>(m);
             });
         }
-        private void ChangeContent<T>(Stream stream = null) where T : class
+        private void ChangeContent<T>(object stream = null) where T : class
         {
             Type type = typeof(T);
 
@@ -41,7 +41,7 @@ namespace Avalonia_RandomAnimeTorrentApp.ViewModels
                 }
                 else if (type == typeof(PlayerViewModel))
                 {
-                    viewModelCache[type] = new PlayerViewModel(stream);
+                    viewModelCache[type] = new PlayerViewModel(stream as Stream);
                 }
 
                 Content = viewModelCache[type];
