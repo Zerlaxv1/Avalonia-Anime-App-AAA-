@@ -142,7 +142,7 @@ public class VideoView : NativeControlHost
 		if(_floatingContent is not null)
 		{
 			Debug.WriteLine("POINTER ENTER");
-			_floatingContent.Opacity = 0.8;
+			_floatingContent.Opacity = 1;
 		}
 	}
 
@@ -151,7 +151,7 @@ public class VideoView : NativeControlHost
 		if(_floatingContent is not null)
 		{
 			Debug.WriteLine("POINTER LEAVE");
-			_floatingContent.Opacity = 0;
+			_floatingContent.Opacity = 1;
 		}
 	}
 
