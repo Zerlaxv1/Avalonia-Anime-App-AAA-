@@ -79,8 +79,8 @@ namespace Avalonia_RandomAnimeTorrentApp.ViewModels
             JObject response = await WebDb.CallApiJson(uri);
 
             List<JToken> values = response["data"].ToList();
-            List<Torrents> torrents = new List<Torrents>();
-            Torrents TorrentWithTheMostSeeders = null;
+            List<Torrent> torrents = new List<Torrent>();
+            Torrent TorrentWithTheMostSeeders = null;
 
             foreach (var i in values)
             {
@@ -90,13 +90,12 @@ namespace Avalonia_RandomAnimeTorrentApp.ViewModels
 
                 if ( seeders == "" || seeders == "0") {continue;}
 
-                Torrents tor = new()
-                {
-                    Seeders = Convert.ToInt32(seeders),
-                    Leechers = Convert.ToInt32(leechers),
-                    TorrentUrl = i["torrent_url"].ToString(),
-                    Title = i["title"].ToString()
-                };
+                Torrent tor = new(
+                    Convert.ToInt32(seeders),
+                    Convert.ToInt32(leechers),
+                    i["torrent_url"].ToString(),
+                    i["title"].ToString()
+                );
 
                 torrents.Add(tor);
                 
