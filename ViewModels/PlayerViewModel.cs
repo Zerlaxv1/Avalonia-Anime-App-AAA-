@@ -4,10 +4,11 @@ using CommunityToolkit.Mvvm.Messaging;
 using LibVLCSharp.Shared;
 using System.Diagnostics;
 using System.IO;
+using Avalonia.SimpleRouter;
 
 namespace Avalonia_RandomAnimeTorrentApp.ViewModels
 {
-    public partial class PlayerViewModel : ObservableObject
+    public partial class PlayerViewModel : ViewModelBase
     {
         [ObservableProperty] private MediaPlayer mediaPlayerView;
 
@@ -15,13 +16,12 @@ namespace Avalonia_RandomAnimeTorrentApp.ViewModels
 
         private readonly LibVLC? VLC = new();
 
-        public PlayerViewModel(Stream stream)
+        private HistoryRouter<ViewModelBase> router;
+
+        public PlayerViewModel(HistoryRouter<ViewModelBase> router)
         {
+            this.router = router;
             Core.Initialize();
-            if (stream != null)
-            {
-                playBack(stream);
-            }
         }
 
         public void playBack(Stream stream)

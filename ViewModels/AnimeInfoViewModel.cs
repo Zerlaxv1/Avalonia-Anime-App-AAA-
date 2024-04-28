@@ -9,10 +9,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.IO;
 using System.Threading;
+using Avalonia.SimpleRouter;
 
 namespace Avalonia_RandomAnimeTorrentApp.ViewModels
 {
-    internal partial class AnimeInfoViewModel : ObservableObject
+    internal partial class AnimeInfoViewModel : ViewModelBase
     {
 
         JObject requestFindMyAnime;
@@ -30,15 +31,18 @@ namespace Avalonia_RandomAnimeTorrentApp.ViewModels
         [ObservableProperty]
         public bool isPlayButtonVisible = false;
 
-        public AnimeInfoViewModel()
+        private HistoryRouter<ViewModelBase> router;
+
+        public AnimeInfoViewModel(HistoryRouter<ViewModelBase> router)
         {
-            WeakReferenceMessenger.Default.Register<MyItem>(this, (r, m) =>
-            {
-                OnMyMessageReceived(m);
-            });
+            this.router = router;
         }
 
-        private async void OnMyMessageReceived(MyItem message)
+        /// <summary>
+        /// display the anime info
+        /// </summary>
+        /// <param name="message"></param>
+        public async void DisplayShit(MyItem message)
         {
             //test
 
@@ -110,7 +114,8 @@ namespace Avalonia_RandomAnimeTorrentApp.ViewModels
 
             Stream stream = await WebDb.Torrenting(new Uri(TorrentWithTheMostSeeders.TorrentUrl), "torrrent", cancelToken);
 
-            WeakReferenceMessenger.Default.Send<Stream>(stream);
+            PlayerViewModel pvm = router.GoTo<PlayerViewModel>();
+            pvm.playBack(stream);
         }
     }
 }

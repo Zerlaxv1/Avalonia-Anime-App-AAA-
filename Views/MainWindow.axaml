@@ -17,7 +17,7 @@
 			<views:SearchAndInfoView />
 		</DataTemplate>
 		<DataTemplate DataType="{x:Type vm:PlayerViewModel}">
-			<views:Player />
+			<views:PlayerView />
 		</DataTemplate>
 		
 	</Window.DataTemplates>

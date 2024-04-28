@@ -5,12 +5,10 @@
 			 xmlns:vm="clr-namespace:Avalonia_RandomAnimeTorrentApp.ViewModels"
 			 xmlns:views="clr-namespace:Avalonia_RandomAnimeTorrentApp.Views"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="Avalonia_RandomAnimeTorrentApp.Views.AnimeInfo">
-	<UserControl.DataContext>
-		<vm:AnimeInfoViewModel />
-	</UserControl.DataContext>
+             x:Class="Avalonia_RandomAnimeTorrentApp.Views.AnimeInfoView">
 	<UserControl.Content>
-		<Grid ShowGridLines="False">
+		<Grid ShowGridLines="False"
+		      Background="{Binding BackgroundBrush}">
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="4*" MaxWidth="350"/>
 			<ColumnDefinition Width="13*"/>

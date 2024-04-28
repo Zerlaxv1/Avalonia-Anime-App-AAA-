@@ -4,7 +4,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vlc="using:LibVLCSharp.Avalonia.Unofficial"
 		mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-        x:Class="Avalonia_RandomAnimeTorrentApp.Views.Player"
+        x:Class="Avalonia_RandomAnimeTorrentApp.Views.PlayerView"
 		xmlns:vm="clr-namespace:Avalonia_RandomAnimeTorrentApp.ViewModels">
 	<Grid>
 		<Grid.ColumnDefinitions>

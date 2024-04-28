@@ -8,7 +8,7 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Avalonia_RandomAnimeTorrentApp.Views.SearchAndInfoView">
 	<UserControl.Content>
-		<Grid Background="Gray" 
+		<Grid Background="{Binding BackgroundBrush}"
 					HorizontalAlignment="Stretch" 
 					VerticalAlignment="Stretch">
 			
@@ -117,7 +117,7 @@
 				ZIndex="-1"
 				Margin="0,15,0,0">
 				<ContentControl.Content>
-					<views:AnimeInfo/>
+					<views:AnimeInfoView/>
 				</ContentControl.Content>
 
 			</ContentControl>

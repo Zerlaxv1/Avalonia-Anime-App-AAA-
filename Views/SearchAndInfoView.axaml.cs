@@ -28,21 +28,21 @@ namespace Avalonia_RandomAnimeTorrentApp.Views
         private ListBox mSearchResultsListBox;
         private TextBox mSearchTextBox;
         private Grid mGridSearchResultsListBox;
-        private AnimeInfo animeInfo;
+        private AnimeInfoView animeInfo;
 
         #endregion
-        public ObservableCollection<string> MyList { get; } = new ObservableCollection<string>();
+        //public ObservableCollection<string> MyList { get; } = new ObservableCollection<string>();
 
         public SearchAndInfoView()
         {
             InitializeComponent();
 
-            DataContext = new SearchAndInfoViewModel();
+            //DataContext = new SearchAndInfoViewModel();
 
             //idk some shit needed
-            mSearchResultsListBox = this.FindControl<ListBox>("SearchResultsListBox") ?? throw new Exception("SearchResultsListBox not found");
+            //mSearchResultsListBox = this.FindControl<ListBox>("SearchResultsListBox") ?? throw new Exception("SearchResultsListBox not found");
             mSearchTextBox = this.FindControl<TextBox>("SearchTextBox") ?? throw new Exception("SearchTextBox not found");
-            mGridSearchResultsListBox = this.FindControl<Grid>("GridSearchResultsListBox") ?? throw new Exception("GridSearchResultsListBox not found");
+            //mGridSearchResultsListBox = this.FindControl<Grid>("GridSearchResultsListBox") ?? throw new Exception("GridSearchResultsListBox not found");
             mSearchTextBox.Focus();
             //mSearchTextBox.AddHandler(TextInputEvent, TextBoxSearchQuerieUpdate, RoutingStrategies.Tunnel);
         }

@@ -17,26 +17,26 @@ using Avalonia.Interactivity;
 using Avalonia.Input;
 using Avalonia.Threading;
 using System.Timers;
+using Avalonia.SimpleRouter;
 
 namespace Avalonia_RandomAnimeTorrentApp.ViewModels
 {
     // TODO: I made this public instead of internal
     // TODO: There should be some comments on the purpose of the ViewModel
-    public partial class SearchAndInfoViewModel : ObservableObject
+    public partial class SearchAndInfoViewModel : ViewModelBase
     {
+
+        private HistoryRouter<ViewModelBase> router;
+
         #region Public Properties
-        readonly System.Timers.Timer timer;
+
+        private readonly System.Timers.Timer timer;
+
         /// <summary>
         /// List of Search Results based on the inputed TextBox string
         /// </summary>
         [ObservableProperty]
         private ObservableCollection<string> searchResults = new();
-
-        /// <summary>
-        /// The "Greeting" string.... TODO: I don't think this is used
-        /// </summary>
-        [ObservableProperty]
-        private string greeting = "Present ?";
 
         [ObservableProperty]
         private int resultHeight = 355;
@@ -48,14 +48,13 @@ namespace Avalonia_RandomAnimeTorrentApp.ViewModels
         private bool isGridListBoxVisible = false;
 
         /// <summary>
-        /// Result of the search for web results based on the TextBox Text
+        /// Result of the search are stored here
         /// </summary>
         [ObservableProperty]
         private List<MyItem> searchItems = new();
 
         /// <summary>
         /// I don't know why this is a string... it should be an ObservableCollection<string> I would think
-        /// 
         /// </summary>
         [ObservableProperty]
         private string myItems;
@@ -65,22 +64,6 @@ namespace Avalonia_RandomAnimeTorrentApp.ViewModels
         /// </summary>
         [ObservableProperty]
         private string imageUrl = "https://i.imgur.com/1Z1Z1Z1.png";
-
-        public ICommand FunctionCommand { get; set; }
-
-        // crete public TextBoxLostFocusAsync method 
-        
-        public void TextBoxLostFocusAsync(object sender, RoutedEventArgs e)
-        {
-            IsGridListBoxVisible = false;
-        }
-
-        public void TextBoxGotFocusAsync(object sender, GotFocusEventArgs e)
-        {
-            IsGridListBoxVisible = true;
-        }
-
-
 
         #endregion Public Properties
 
@@ -149,8 +132,10 @@ namespace Avalonia_RandomAnimeTorrentApp.ViewModels
         /// <summary>
         /// Default Constructor
         /// </summary>
-        public SearchAndInfoViewModel()
+        public SearchAndInfoViewModel(HistoryRouter<ViewModelBase> router)
         {
+            this.router = router;
+
             timer = new System.Timers.Timer(500);
             timer.Elapsed += TextBoxSearch;
             timer.AutoReset = false;
@@ -203,9 +188,8 @@ namespace Avalonia_RandomAnimeTorrentApp.ViewModels
                 throw new Exception($"AniDB id not found, ${ex}");
             }
 
-            // send those informations to AnimeInfoViewModel by menssenger
-
-            WeakReferenceMessenger.Default.Send(selectedItem);
+            AnimeInfoViewModel avm = router.GoTo<AnimeInfoViewModel>();
+            avm.DisplayShit(selectedItem);
 
         }
 

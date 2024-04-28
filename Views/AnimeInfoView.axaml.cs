@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Avalonia_RandomAnimeTorrentApp.Views
 {
-    public partial class AnimeInfo : UserControl
+    public partial class AnimeInfoView : UserControl
     {
         /*
         #region private members
@@ -19,7 +19,7 @@ namespace Avalonia_RandomAnimeTorrentApp.Views
 
         #endregion
         */
-        public AnimeInfo()
+        public AnimeInfoView()
         {
             InitializeComponent();
             /*
@@ -30,7 +30,7 @@ namespace Avalonia_RandomAnimeTorrentApp.Views
             mtextBlockDescriptionInfo = this.FindControl<TextBlock>("textBlockDescriptionInfo") ?? throw new Exception("TextBlockDescriptionInfo not found");
             mlabelTitleInfo.Content = "Title2";
             */
-            this.DataContext = new AnimeInfoViewModel();
+            //this.DataContext = new AnimeInfoViewModel();
         }
     }
 }

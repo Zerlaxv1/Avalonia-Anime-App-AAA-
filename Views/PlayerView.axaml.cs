@@ -7,11 +7,11 @@ using ReactiveUI;
 
 namespace Avalonia_RandomAnimeTorrentApp.Views
 {
-    public partial class Player : ReactiveUserControl<PlayerViewModel>
+    public partial class PlayerView : ReactiveUserControl<PlayerViewModel>
     {
         public VideoView mVideoView;
 
-        public Player()
+        public PlayerView()
         {
             InitializeComponent();
             mVideoView = this.Get<VideoView>("VideoViewer") ?? throw new Exception("VideoViewer not found");
